@@ -23,23 +23,23 @@
 
     - name: Add user to microk8s group
       user:
-        name: "netcon"
+        name: "<user name>"
         groups: microk8s
         append: yes
 
     - name: Create .kube directory if it does not exist
       file:
-        path: /home/netcon/.kube
+        path: /home/<user name>/.kube
         state: directory
-        owner: "netcon"
-        group: "netcon"
+        owner: "<user name>"
+        group: "<user name>"
 
     - name: Change ownership of the .kube directory
       file:
-        path: /home/netcon/.kube
+        path: /home/<user name>/.kube
         state: directory
-        owner: "netcon"
-        group: "netcon"
+        owner: "<user name>"
+        group: "<user name>"
 
 #    - name: Reload user groups
 #      command: newgrp microk8s
@@ -64,17 +64,17 @@
 
     - name: Ensure .kube config exists
       file:
-        path: /home/netcon/.kube/config
+        path: /home/<user name>/.kube/config
         state: touch
-        owner: "netcon"
-        group: "netcon"
+        owner: "<user name>"
+        group: "<user name>"
 
     - name: Set up kubeconfig for the user
       shell: |
-        microk8s config > /home/netcon/.kube/config
+        microk8s config > /home/<user name>/.kube/config
       args:
         executable: /bin/bash
-      become_user: "netcon"
+      become_user: "<user name>"
 
     - name: Add the Open5GS Helm repository
       command: microk8s helm repo add adaptivenetlab https://adaptivenetlab.github.io/charts/
